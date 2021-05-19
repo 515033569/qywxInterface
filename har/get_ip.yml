@@ -1,0 +1,49 @@
+config:
+    name: testcase description
+    base_url: ${ENV(base_url)}
+    variables: {}
+    verify: false
+teststeps:
+-   name: /cgi-bin/gettoken
+    request:
+        headers:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Host: qyapi.weixin.qq.com
+            Postman-Token: 3766c14a-7cfb-4d37-9448-b0d2274b713d
+            User-Agent: PostmanRuntime/7.26.8
+        method: GET
+        params:
+            corpid: ww93348658d7c66ef4
+            corpsecret: T0TFrXmGYel167lnkzEydsjl6bcDDeXVmkUnEYugKIw
+        url: /cgi-bin/gettoken
+    extract:
+        token: content.access_token
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=UTF-8
+-   name: /cgi-bin/getcallbackip
+    request:
+        headers:
+            Accept: '*/*'
+            Accept-Encoding: gzip, deflate, br
+            Connection: keep-alive
+            Host: qyapi.weixin.qq.com
+            Postman-Token: 127ef95d-c4a3-4799-865e-544fe7271b75
+            User-Agent: PostmanRuntime/7.26.8
+        method: GET
+        params:
+            access_token: $token
+        url: /cgi-bin/getcallbackip
+    validate:
+    -   eq:
+        - status_code
+        - 200
+    -   eq:
+        - headers.Content-Type
+        - application/json; charset=UTF-8
